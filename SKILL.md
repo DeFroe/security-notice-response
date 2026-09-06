@@ -1,6 +1,6 @@
 ---
 name: security-notice-response
-description: Handles the full workflow when a security or malfunction notice arrives about a client website/project you maintain, for example a hosting provider's vulnerability scan, an npm/GitHub security advisory, an SSL/domain warning, or a report of a broken feature (contact form, checkout, login). Covers the whole path from triage to finished client communication - assess severity, implement or delegate the fix, update the project's status/changelog docs, draft (or, if configured, auto-send) a client update email from a template, and log it in the client-facing history. Use this skill as soon as the user pastes, forwards, or summarizes such a notice, or says things like "got a security alert for client X" or "hosting flagged some vulnerabilities on the site", even if they don't name the skill. Works across any number of client projects as long as each has a small project config file (see references/project-config.md) - if none exists yet for the project at hand, this skill's first job is to help create one.
+description: Handles the full workflow when a security or malfunction notice arrives about a client website/project you maintain - a hosting provider's vulnerability scan, an npm/GitHub security advisory, an SSL/domain warning, or a report of a broken feature (contact form, checkout, login). Covers triage through finished client communication: assess severity, fix or delegate, update the project's status/changelog docs, draft (or, if configured, send) a client update email, and log it. Use it as soon as the user pastes, forwards, or summarizes such a notice, or says things like "got a security alert for client X" or "hosting flagged some vulnerabilities on the site", even if they don't name the skill. Works across any number of client projects, each with its own small config file - if none exists yet for the project at hand, this skill's first job is to help create one.
 ---
 
 # Security Notice Response
@@ -35,13 +35,13 @@ If the project's status log doesn't have an entry for this yet, add a short, dat
 
 ## Step 2: Fix
 
-- If the config names a `fix_delegate` (a subagent or a specific person/process), hand it off there with the full context from Step 1 - not just "fix this". Otherwise, implement the fix yourself.
-- If the config names a `protected_remote` or `protected_branch` (the thing that actually pushes to the live/production site), stop **before** running that push and ask for it specifically - a generic "ok, commit and push" earlier in the conversation does not count, and neither does noting the push in a changelog entry after the fact. Get the explicit go-ahead first, then push, then document what happened in Step 3. This mirrors ordinary safe-push discipline but is worth restating because it's easy to bundle a security push into a broader "yes go ahead," or to treat "I'll mention it in the changelog" as if it were the confirmation itself.
+- If the config names a **Fix delegate** (a subagent or a specific person/process), hand it off there with the full context from Step 1 - not just "fix this". Otherwise, implement the fix yourself.
+- If the config names a **Protected remote/branch** (the thing that actually pushes to the live/production site), stop **before** running that push and ask for it specifically - a generic "ok, commit and push" earlier in the conversation does not count, and neither does noting the push in a changelog entry after the fact. Get the explicit go-ahead first, then push, then document what happened in Step 3. This mirrors ordinary safe-push discipline but is worth restating because it's easy to bundle a security push into a broader "yes go ahead," or to treat "I'll mention it in the changelog" as if it were the confirmation itself.
 - Verify before calling it done: run whatever the project's normal checks are (build, lint, audit, tests, a security review pass) - don't rely on "the fix compiled."
 
 ## Step 3: Document internally
 
-Add an entry to the project's `status_log_path` and, if the config has one, `changelog_path` - what was reported, what was done, how it was verified, where it ended up (branch, deploy). Keep the internal record technical; the client-facing version comes next and is written differently.
+Add an entry to the file named under **Internal status log** and, if the config has one, **Changelog** - what was reported, what was done, how it was verified, where it ended up (branch, deploy). Keep the internal record technical; the client-facing version comes next and is written differently.
 
 ## Step 4: Notify the client
 
@@ -49,11 +49,11 @@ Only for notices that actually reached the live site and were security- or funct
 
 Draft the email using `references/email-template.md` (or a template the config points to instead). Write it in plain, non-technical language aimed at the client, not a copy-paste of the internal changelog entry - the point is reassurance and clarity, not a vulnerability report.
 
-**Default behavior: show the draft and ask before sending.** Only send without asking if the project config explicitly sets `auto_send_email: true`. That flag should only ever be turned on because the user made a deliberate call for that specific project - it is not something to enable on someone's behalf, and it is not the default for a new project config.
+**Default behavior: show the draft and ask before sending.** Only send without asking if the project config explicitly sets **Auto-send client email** to true. That flag should only ever be turned on because the user made a deliberate call for that specific project - it is not something to enable on someone's behalf, and it is not the default for a new project config.
 
 ## Step 5: Log the client-facing summary
 
-Add a short, non-technical entry to the project's `client_log_path` (if the config has one) - what happened, in the client's own terms, plus a line noting the email was sent (or drafted and is awaiting approval) with date and recipients. This becomes the searchable history of what the client was told, separate from the technical changelog.
+Add a short, non-technical entry to the file named under **Client-facing log** (if the config has one) - what happened, in the client's own terms, plus a line noting the email was sent (or drafted and is awaiting approval) with date and recipients. This becomes the searchable history of what the client was told, separate from the technical changelog.
 
 ## Edge case: informational notices with nothing to do
 

@@ -24,12 +24,12 @@ issues that could affect uptime, critical deploy failures) versus not
 (marketing emails, generic activity notifications with no security angle,
 routine success confirmations).
 
-If you find anything relevant that isn't already noted in [status_log_path]:
+If you find anything relevant that isn't already noted in [internal status log path]:
 add a short, dated entry there (format: "- **[date] sender/topic**: what was
 reported, in 1-2 sentences. (Source: email from X, date)"). Check first that
 it isn't already logged - don't duplicate.
 
-Commit and push ONLY changes to [status_log_path], and only if you actually
+Commit and push ONLY changes to [internal status log path], and only if you actually
 added something. Do not attempt to fix anything, do not send any email - this
 is a read-only monitoring pass. If you found nothing relevant, don't change
 anything; a quiet confirmation in your summary is enough.

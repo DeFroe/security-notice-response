@@ -19,9 +19,6 @@ security-notices@acmeretail-hosting.example.com (dedicated inbox, used only for 
 ## Client-facing log
 `docs/client-updates.md`
 
-## Email template
-(using the default from references/email-template.md)
-
 ## Email from / to
 From: agency@example.com
 To: sam@acmeretail.example.com
