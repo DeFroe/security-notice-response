@@ -22,6 +22,40 @@ Or download it and copy the folder contents into `~/.claude/skills/security-noti
 
 By default, client emails are **drafted for your approval**, never sent automatically. If you want a specific project to send without asking, set **Auto-send client email** to true in that project's config - that's a deliberate per-project choice, not something to turn on lightly.
 
+## What a run looks like
+
+An illustrative walkthrough using the sample project from `examples/example-project-config.md`. It's a composite rather than a captured transcript - but it's the shape every run takes.
+
+**The notice comes in:**
+
+> Security scan for acmeretail.example.com found 6 vulnerabilities in your dependencies: 4 moderate, 2 high.
+
+**Step 1 - triage.** The skill reports what was actually found instead of repeating the number:
+
+> Six findings, but not six incidents. Four are the same transitive dependency pulled in by build tooling - dev-only, never shipped to a browser, no production impact. The two "high" ones are real and both reach the live site. The scan itself is legitimate: it came from the sender domain this project's config lists.
+
+A dated line goes into `docs/status.md` immediately, before any fix - so the notice is on record even if the work has to wait.
+
+**Step 2 - fix.** This project's config sets **Fix delegate** to `self`, so the skill does the work: updates the two runtime packages, leaves the dev-only ones for the next routine pass, then runs the project's own build and audit rather than assuming a clean compile means a clean fix. Because the config names a **Protected remote/branch**, it stops before pushing there and asks for that push specifically - not on the back of an earlier, general "go ahead".
+
+**Step 3 - document internally.** A technical entry in the files named under **Internal status log** and **Changelog**: what was reported, which packages moved, how it was verified, where it landed.
+
+**Step 4 - the client email.** Drafted and shown to you, not sent:
+
+> **Subject:** Website update - Security update completed
+>
+> Hi Sam,
+>
+> An automated security scan flagged a few vulnerabilities in some of the technical components behind your website. I addressed the ones affecting the live site the same day, and a follow-up scan confirms they're resolved.
+>
+> These were precautionary technical updates - there was no indication at any point of an actual attack or data exposure, and the store stayed fully reachable throughout. There's nothing you need to do on your end.
+>
+> Feel free to reach out anytime with questions.
+
+**Step 5 - log it.** A short, non-technical entry in the **Client-facing log**, plus a line recording that the email went out, to whom, and when. That file becomes the searchable history of what the client was actually told, separate from the technical changelog.
+
+The four dev-only findings never reach the client at all. That's the **Relevance scope** field doing its job - deciding what's worth a client's attention and what stays internal.
+
 ## Optional: automate the mailbox check itself
 
 This skill reacts to notices - it doesn't sit and watch an inbox on its own. If you want that too, `references/automation-setup.md` covers two ways to set up hands-off polling (a Claude Code cloud routine, or a generic cron job/script), both built around the same rule: the automated part only reads and logs, it never fixes anything or emails a client unattended. Those actions stay with you, in an interactive session, at least at review time.
@@ -43,6 +77,10 @@ The MIT license below covers this in legal terms; in plain ones: this skill edit
 - `references/email-template.md` - the default client email template
 - `references/automation-setup.md` - optional inbox-polling setup
 - `examples/example-project-config.md` - a filled-in sample config
+
+## Author
+
+Dennis Frösch - [@DeFroe](https://github.com/DeFroe)
 
 ## License
 
