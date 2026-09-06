@@ -9,7 +9,7 @@ It works across any number of client projects. Each project gets one small confi
 Clone this repo directly into your Claude Code skills folder:
 
 ```bash
-git clone https://github.com/<your-username>/security-notice-response ~/.claude/skills/security-notice-response
+git clone https://github.com/DeFroe/security-notice-response ~/.claude/skills/security-notice-response
 ```
 
 Or download it and copy the folder contents into `~/.claude/skills/security-notice-response/` yourself. Either way, restart/reopen Claude Code so it picks up the new skill.
