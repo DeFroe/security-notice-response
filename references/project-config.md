@@ -49,5 +49,6 @@ To: [recipient address(es)]
 ## Notes on filling it in
 
 - **Client contact** and **relevance scope** are worth spending a moment on during setup - they're the two fields that most affect tone and judgment calls later, and are easy to get wrong if rushed.
+- **Email from / to** must end up with real addresses, not bracketed placeholders. If the user hasn't given you both yet, ask before writing the file - a config that still says `[sender address - fill in]` will get copied verbatim into a client-facing email draft later, which is worse than pausing now.
 - If a project has no separate changelog or client-facing log, that's fine - just omit those sections. Not every project needs three separate files; a single status log with two kinds of entries works too, in which case say so in **Internal status log** (e.g. "single file, tag client-facing entries with `[client]`").
 - Leave **Auto-send client email** unset (or explicitly `false`) unless the user has clearly decided they're comfortable with unattended client communication for this specific project. This is a per-project decision, not a one-time global preference - a user might want auto-send for a low-stakes internal tool and manual approval for a paying client's storefront.

@@ -13,7 +13,7 @@ This skill is deliberately config-driven. It has no built-in knowledge of any sp
 
 Look for a project config file for the project currently being discussed. Convention: a file named `security-response.config.md` in the project's root, or wherever the user says they keep it (some users prefer a subfolder, e.g. `docs/security-response.config.md`). If the user has already told you a path in an earlier session, reuse it.
 
-If no config exists yet: read `references/project-config.md` for the schema, interview the user briefly (project name, client contact, which mailbox/notices this covers, where their status/changelog/client-log files live, whether a subagent should handle fixes, whether any git remote/branch needs an extra confirmation before pushing, and - important - whether they want client emails sent automatically or drafted for approval), then write the config file. Don't guess at defaults for anything client-communication-related; ask.
+If no config exists yet: read `references/project-config.md` for the schema, interview the user briefly (project name, client contact, which mailbox/notices this covers, where their status/changelog/client-log files live, the actual **from and to email addresses** for client updates, whether a subagent should handle fixes, whether any git remote/branch needs an extra confirmation before pushing, and - important - whether they want client emails sent automatically or drafted for approval), then write the config file. Don't guess at defaults for anything client-communication-related, and don't leave the email addresses as placeholders - a config with a bracketed `[fill in]` where an address should be isn't finished; ask until you have real values.
 
 Everything after this step assumes the config exists and has been read.
 
@@ -36,7 +36,7 @@ If the project's status log doesn't have an entry for this yet, add a short, dat
 ## Step 2: Fix
 
 - If the config names a `fix_delegate` (a subagent or a specific person/process), hand it off there with the full context from Step 1 - not just "fix this". Otherwise, implement the fix yourself.
-- If the config names a `protected_remote` or `protected_branch` (the thing that actually pushes to the live/production site), that push needs an **explicit, separate confirmation** from the user - a generic "ok, commit and push" earlier in the conversation does not count. This mirrors ordinary safe-push discipline but is worth restating because it's easy to bundle a security push into a broader "yes go ahead."
+- If the config names a `protected_remote` or `protected_branch` (the thing that actually pushes to the live/production site), stop **before** running that push and ask for it specifically - a generic "ok, commit and push" earlier in the conversation does not count, and neither does noting the push in a changelog entry after the fact. Get the explicit go-ahead first, then push, then document what happened in Step 3. This mirrors ordinary safe-push discipline but is worth restating because it's easy to bundle a security push into a broader "yes go ahead," or to treat "I'll mention it in the changelog" as if it were the confirmation itself.
 - Verify before calling it done: run whatever the project's normal checks are (build, lint, audit, tests, a security review pass) - don't rely on "the fix compiled."
 
 ## Step 3: Document internally
