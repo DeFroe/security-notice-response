@@ -30,7 +30,7 @@ This skill reacts to notices - it doesn't sit and watch an inbox on its own. If 
 
 This started as a routine, not as an idea. Maintaining a live website for a client means a steady trickle of hosting scans, dependency advisories and the occasional "something on the site is broken" report - and every one of them ran through the same four steps: work out how serious it actually is, fix it, write it down internally, then tell the client in language they'd actually understand. Same steps, same order, every time. The client email was reliably the part that got put off the longest, even though it's the part the client sees.
 
-Once you've done that often enough, turning it into a skill is the obvious next move - not to automate the judgment calls, but to stop re-deciding the process and re-inventing the wording every time. It has been run end to end against a real client project. The first full test run surfaced two gaps worth fixing: a project config that let placeholder email addresses slip through into a client-facing draft, and a production push that could be waved through on an earlier, generic "go ahead" instead of its own confirmation. Both are fixed, and the workflow has run cleanly since.
+Once you've done that often enough, turning it into a skill is the obvious next move - not to automate the judgment calls, but to stop re-deciding the process and re-inventing the wording every time. Before release it was run end to end against two simulated client projects. Those runs surfaced two gaps worth fixing: a project config that let placeholder email addresses slip through into a client-facing draft, and a production push that could be waved through on an earlier, generic "go ahead" instead of its own confirmation. Both are fixed.
 
 ## No warranty
 
